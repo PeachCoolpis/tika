@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.tika.mapper.DocumentMapper">
+
+    <insert id="insertDocument" parameterType="test.tika.entity.Document">
+        INSERT INTO documents (title, content)
+        VALUES (#{title}, #{content})
+    </insert>
+
+    <select id="searchDocuments" parameterType="string" resultType="test.tika.entity.Document">
+        SELECT id, title, content
+        FROM documents
+        WHERE MATCH(content) AGAINST(CONCAT(#{keyword}, '*') IN BOOLEAN MODE)
+    </select>
+
+</mapper>
